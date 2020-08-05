@@ -15,6 +15,6 @@ namespace Blog.Client.Models
         public string ProfileImage { get; set; }
 
         [JsonPropertyName("socialLinks")]
-        public Dictionary<string,string> SocialLinks { get; set; }
+        public Dictionary<string,string> SocialLinks { get; set; } = new Dictionary<string, string>();
     }
 }
