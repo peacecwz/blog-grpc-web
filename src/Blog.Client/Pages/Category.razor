@@ -1,0 +1,37 @@
+﻿@page "/category/{slug}"
+@using Blog.Client.Helpers
+@using Blog.Client.Services
+@using Blog.Client.ViewModels
+@inject PostsService PostsService
+@inject HtmlHelpers Html
+
+<AuthorSummary/>
+
+<div class="graybg authorpage">
+    <div class="container">
+        <div class="listrecent listrelated">
+            @foreach (var post in Posts)
+            {
+                <PostSummary Post="@post"/>
+            }
+        </div>
+    </div>
+</div>
+
+@code
+{
+    [Parameter]
+    public string Slug { get; set; }
+
+    private List<PostViewModel> Posts { get; set; } = new List<PostViewModel>();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Posts = await PostsService.GetPostsByCategory(Slug);
+        var title = Posts.Any()
+            ? $"{Posts.FirstOrDefault()?.CategoryName} - Baris Ceviz"
+            : "No Posts Found - Baris Ceviz";
+        
+        await Html.SetTitle(title);
+    }
+}
