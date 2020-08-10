@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System.Net;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Hosting;
 
 namespace Blog.API
@@ -12,6 +14,15 @@ namespace Blog.API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder
+                        .UseKestrel(options =>
+                        {
+                            options.ListenLocalhost(5001,
+                                listenOptions => listenOptions.Protocols = HttpProtocols.Http1AndHttp2);
+                        })
+                        .UseStartup<Startup>();
+                });
     }
 }
