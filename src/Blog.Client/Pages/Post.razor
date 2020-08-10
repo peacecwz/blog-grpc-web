@@ -1,0 +1,90 @@
+﻿@page "/post/{slug}"
+@using System.Text.Json
+@using Blog.Client.Helpers
+@using Blog.Client.Services
+@using Blog.Client.ViewModels
+@inject PostsService PostsService
+@inject IOptions<AuthorViewModel> AuthorViewModel
+@inject HtmlHelpers Html
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2 col-xs-12">
+
+        </div>
+
+        <div class="col-md-8 col-md-offset-2 col-xs-12">
+            <div class="mainheading">
+
+                <!-- Begin Top Meta -->
+                <div class="row post-top-meta">
+                    <div class="col-md-2">
+                        <a href="/">
+                            <img class="author-thumb" src="@Author.ProfileImage" alt="@Author.FullName">
+                        </a>
+                    </div>
+                    <div class="col-md-10">
+                        <a class="link-dark" href="/">@Author.FullName</a><a href="#" class="btn follow">Follow</a>
+                        <span class="author-description">@Author.Biography</span>
+                        <span class="post-date">@PostViewModel.PublishedDate.ToShortDateString()</span><span class="dot"></span><span class="post-read">6 min read</span>
+                    </div>
+                </div>
+                <!-- End Top Menta -->
+
+                <h1 class="posttitle">@PostViewModel.Title</h1>
+            </div>
+
+            <img class="featured-image img-fluid" src="@PostViewModel.CoverImageUrl" alt="@PostViewModel.Title">
+
+            @if (!string.IsNullOrWhiteSpace(PostViewModel.Content))
+            {
+                <div class="article-post">
+                    @((MarkupString) PostViewModel.Content)
+                </div>
+            }
+
+            <div class="hideshare"></div>
+
+            @if (!string.IsNullOrWhiteSpace(PostViewModel.Tags))
+            {
+                <div class="after-post-tags">
+                    <ul class="tags">
+                        @{
+                            var tags = PostViewModel.Tags.Split(',');
+                        }
+                        @foreach (var tag in tags)
+                        {
+                            var url = $"/tag/{tag}";
+                            <li>
+                                <a href="@url">@tag</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+<div class="hideshare"></div>
+
+@code
+{
+    [Parameter]
+    public string Slug { get; set; }
+
+    public PostViewModel PostViewModel { get; set; } = new PostViewModel();
+    public AuthorViewModel? Author { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        PostViewModel = await PostsService.GetPost(Slug);
+        await Html.SetTitle($"{PostViewModel.Title} - Baris Ceviz");
+    }
+
+    protected override void OnInitialized()
+    {
+        Author = AuthorViewModel.Value;
+    }
+}
