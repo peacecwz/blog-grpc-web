@@ -1,0 +1,21 @@
+syntax = "proto3";
+option csharp_namespace = "Blog.Contract";
+
+import "google/protobuf/empty.proto";
+
+package category;
+
+service CategoryService {
+  rpc GetCategories (google.protobuf.Empty) returns (GetCategoriesResponse);
+}
+
+message GetCategoriesResponse {
+  repeated Category categories = 1;
+}
+
+message Category {
+  int64 id = 1;
+  string name = 2;
+  string slug = 3;
+  string imageUrl = 4;
+}
