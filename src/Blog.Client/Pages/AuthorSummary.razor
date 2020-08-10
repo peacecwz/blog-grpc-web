@@ -1,18 +1,21 @@
-﻿@inject IOptions<Models.Author> AuthorModel
+﻿@using Blog.Client.ViewModels
+@inherits ComponentBase
+@inject IOptions<AuthorViewModel> AuthorViewModel
 
-<!-- Begin Top Author Page
-================================================== -->
 <div class="container">
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8 col-md-offset-2">
             <div class="mainheading">
                 <div class="row post-top-meta authorpage">
+                    <div class="col-md-2 col-xs-12">
+                        <img class="author-thumb" src="@Author.ProfileImage" alt="Sal">
+                    </div>
                     <div class="col-md-10 col-xs-12">
-                        <h1>@CurrentAuthor.FullName</h1>
-                        <span class="author-description">@CurrentAuthor.Biography</span>
+                        <h1>@Author.FullName</h1>
+                        <span class="author-description">@Author.Biography</span>
                         <div class="sociallinks">
-                            @foreach (var socialLink in CurrentAuthor.SocialLinks)
+                            @foreach (var socialLink in Author.SocialLinks)
                             {
                                 <a target="_blank" href="@socialLink.Value">
                                     <i class="fa fa-@socialLink.Key"></i>
@@ -20,23 +23,18 @@
                             }
                         </div>
                     </div>
-                    <div class="col-md-2 col-xs-12">
-                        <img class="author-thumb" src="@CurrentAuthor.ProfileImage" alt="Sal">
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- End Top Author Meta
-================================================== -->
 
-@code{
-    public Models.Author CurrentAuthor { get; set; }
+@code
+{
+    public AuthorViewModel? Author { get; set; }
 
     protected override void OnInitialized()
     {
-        CurrentAuthor = AuthorModel.Value;
+        Author = AuthorViewModel.Value;
     }
-
 }
