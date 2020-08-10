@@ -4,8 +4,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D2ADE616-481
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "protos", "protos", "{0A5340AD-6E6B-4B93-8A8A-BAE4D49E7B40}"
 ProjectSection(SolutionItems) = preProject
-	protos\count.proto = protos\count.proto
-	protos\weather.proto = protos\weather.proto
+	protos\post.proto = protos\post.proto
+	protos\category.proto = protos\category.proto
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.API", "src\Blog.API\Blog.API.csproj", "{24A35619-4C22-4590-A4DA-A523354A7D1B}"

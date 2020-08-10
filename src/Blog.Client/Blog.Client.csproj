@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="..\..\protos\weather.proto" GrpcServices="Client" Link="Protos\weather.proto" Access="Internal" />
-        <Protobuf Include="..\..\protos\count.proto" GrpcServices="Client" Link="Protos\count.proto" Access="Internal" />
+        <Protobuf Include="..\..\protos\category.proto" GrpcServices="Client" Link="Protos\cateogry.proto" Access="Internal" />
+        <Protobuf Include="..\..\protos\post.proto" GrpcServices="Client" Link="Protos\post.proto" Access="Internal" />
     </ItemGroup>
 
     <ItemGroup>
