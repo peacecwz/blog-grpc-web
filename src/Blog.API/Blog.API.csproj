@@ -5,19 +5,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="..\..\protos\weather.proto" GrpcServices="Server" Link="Protos\weather.proto"/>
-        <Protobuf Include="..\..\protos\count.proto" GrpcServices="Server" Link="Protos\count.proto"/>
+        <Protobuf Include="..\..\protos\category.proto" GrpcServices="Server" Link="Protos\category.proto" />
+        <Protobuf Include="..\..\protos\post.proto" GrpcServices="Server" Link="Protos\post.proto" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.3"/>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.0"/>
-        <PackageReference Include="Grpc.AspNetCore" Version="2.30.0"/>
-        <PackageReference Include="Grpc.AspNetCore.Web" Version="2.30.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.0" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.30.0" />
+        <PackageReference Include="Grpc.AspNetCore.Web" Version="2.30.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.6" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.6" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Blog.Client\Blog.Client.csproj"/>
+        <ProjectReference Include="..\Blog.Client\Blog.Client.csproj" />
     </ItemGroup>
 
 </Project>
