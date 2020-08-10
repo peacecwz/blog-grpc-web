@@ -1,8 +1,11 @@
 using System.Linq;
+using Blog.API.Data;
+using Blog.API.Mappers;
 using Blog.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -15,6 +18,9 @@ namespace Blog.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGrpc();
+            services.AddDbContext<BlogDbContext>(options => { options.UseSqlite("filename=blog.db"); });
+            services.AddSingleton<IPostMapper, PostMapper>();
+            services.AddSingleton<ICategoryMapper, CategoryMapper>();
             services.AddResponseCompression(opts =>
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
@@ -40,10 +46,16 @@ namespace Blog.API
 
             app.UseGrpcWeb();
 
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetService<BlogDbContext>();
+                DbInitializer.Initialize(context);
+            }
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<WeatherService>().EnableGrpcWeb();
-                endpoints.MapGrpcService<CounterService>().EnableGrpcWeb();
+                endpoints.MapGrpcService<CategoriesService>().EnableGrpcWeb();
+                endpoints.MapGrpcService<PostsService>().EnableGrpcWeb();
                 endpoints.MapFallbackToFile("index.html");
             });
         }
